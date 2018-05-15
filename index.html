@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+   <head>
+      <meta charset="UTF-8">
+      <title>Kontakte</title>
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <link href="style.css" rel="stylesheet" type="text/css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="script.js"></script>
+      <style>
+#contactlist .list li {
+    border-top: 1px #000 solid;
+    padding: 0.9em 0;
+}
+      </style>
+   </head>
+   <body>
+      <div id="wrapper">
+         <h1>Address book</h1>
+         <div id="contactarea">
+            <div id="listarea">
+               <h5>Contacts</h5>
+               <div id="contactlist">
+                  <input class="search" />
+                  <!-- optional, falls Sortierung noch gewünscht ist -->
+                  <!-- <span class="sort" data-sort="lastname">Sort by name</span> -->
+                  <!-- <span class="sort" data-sort="city">Sort by city</span> -->
+                  <ul class="collection list"></ul>
+               </div>
+               <button id="create-address" type="submit">Hinzufügen</button>	
+            </div>
+            <div id="detailarea">
+               <div id="addressfield">
+                  <div id="overlay">Wählen Sie links eine Adresse aus</div>
+                  <button id="close" type="submit">Close</button>
+                  <p id="addrFirstname"></p>
+                  <p id="addrLastname"></p>
+                  <p id="addrStreet"></p>
+                  <p id="addrZip"></p>
+                  <p id="addrCity"></p>
+                  <p id="addrEmail"></p>
+                  <p id="addrPhone"></p>
+                  <p id="addrBirthday"></p>
+                  <div id="userMessages"></div>
+                  <div id="buttons">
+                     <button id="change" type="submit">Ändern</button>
+                     <button id="delete" type="submit">Löschen</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="container"></div>
+      <div id="dialog-form" title="Adresse ändern">
+         <p class="validateTips">Pflichtfelder sind gekennzeichnet mit *.</p>
+         <form>
+            <fieldset>
+               <label for="firstname">Vorname (*)</label>
+               <input type="text" name="firstname" id="firstname" value="" class="text ui-widget-content ui-corner-all">
+               <label for="lastname">Nachname (*)</label>
+               <input type="text" name="lastname" id="lastname" value="" class="text ui-widget-content ui-corner-all">
+               <label for="street">Straße</label>
+               <input type="text" name="street" id="street" value="" class="text ui-widget-content ui-corner-all">
+               <label for="zip">PLZ</label>
+               <input type="text" name="zip" id="zip" value="" class="text ui-widget-content ui-corner-all">
+               <label for="city">Ort</label>
+               <input type="text" name="city" id="city" value="" class="text ui-widget-content ui-corner-all">
+               <label for="email">E-Mail</label>
+               <input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
+               <label for="phone">Telefonnummer</label>
+               <input type="text" name="phone" id="phone" value="" class="text ui-widget-content ui-corner-all">
+               <label for="birthday">Geburtstag (TT.MM.JJJJ)</label>
+               <input type="text" name="birthday" id="birthday" value="" class="text ui-widget-content ui-corner-all">
+               <!-- Allow form submission with keyboard without duplicating the dialog button -->
+               <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+            </fieldset>
+         </form>
+      </div>
+      <div id="dialog-form2" title="Benutzer anlegen">
+         <p class="validateTips">Pflichtfelder sind gekennzeichnet mit *.</p>
+         <form>
+            <fieldset>
+               <label for="firstname">Vorname (*)</label>
+               <input type="text" name="firstname" id="firstname2" value="" class="text ui-widget-content ui-corner-all">
+               <label for="lastname">Nachname (*)</label>
+               <input type="text" name="lastname" id="lastname2" value="" class="text ui-widget-content ui-corner-all">
+               <label for="street">Straße</label>
+               <input type="text" name="street" id="street2" value="" class="text ui-widget-content ui-corner-all">
+               <label for="zip">PLZ</label>
+               <input type="text" name="zip" id="zip2" value="" class="text ui-widget-content ui-corner-all">
+               <label for="city">Ort</label>
+               <input type="text" name="city" id="city2" value="" class="text ui-widget-content ui-corner-all">
+               <label for="email">E-Mail</label>
+               <input type="text" name="email" id="email2" value="" class="text ui-widget-content ui-corner-all">
+               <label for="phone">Telefonnummer</label>
+               <input type="text" name="phone" id="phone2" value="" class="text ui-widget-content ui-corner-all">
+               <label for="birthday">Geburtstag (TT.MM.JJJJ)</label>
+               <input type="text" name="birthday" id="birthday2" value="" class="text ui-widget-content ui-corner-all">
+               <!-- Allow form submission with keyboard without duplicating the dialog button -->
+               <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+            </fieldset>
+         </form>
+      </div>
+      <div id="users-contain" class="ui-widget"></div>
+   </body>
+</html>
