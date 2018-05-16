@@ -676,5 +676,29 @@ Helpers.valuesToDform(dform);
 
         $( "#dialog_qr_code" ).dialog( "open" );
     });
+
+    var url = "https://api.nytimes.com/svc/topstories/v2/world.json";
+    url += '?' + $.param({
+        'api-key': "2e8afca59cf243bcbc0d87685201793b"
+    });
+
+    $.ajax({
+        url: url,
+        method: 'GET',
+    }).done(function(result) {
+        var news_i = 0;
+        setInterval(function(){
+            document.getElementById('news').innerHTML = result.results[news_i].abstract;
+                console.log(result.results[news_i].abstract);
+            if (news_i< result.results.length){
+                news_i++;
+            } else {
+                news_i = 0;
+            }
+        },3000);
+
+    }).fail(function(err) {
+        throw err;
+    });
     /******************* ENDE DK *************************/
 });
