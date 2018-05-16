@@ -420,6 +420,8 @@ $(function() {
             // refresh contact details
             addressOut();
 
+            $("input[type='text']").val('');
+
             dialog2.dialog("close");
         }
         return valid;
