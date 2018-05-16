@@ -85,8 +85,6 @@ function addressOut() {
 
     var fullAddress = contacts[contactID];
 
-    console.log(contacts);
-    console.log("contactID: " + contactID);
 
     /*
 
@@ -130,17 +128,17 @@ function sendContactDataToServer() {
             neuedaten: prepared
         })
         .done(function(data) {
-            /* swal({
+             swal({
                title: "Done",
                text: "Erfolgreich übermittelt",
                icon: "success", 
-             });*/
+             });
         }).fail(function(data) {
-            /* swal({
+             swal({
               title: "Oooops",
               text: "Übermittlung schiefgelaufen",
               icon: "error",
-            }); */
+            }); 
         });
 }
 
@@ -314,12 +312,10 @@ $(function() {
             allFields.removeClass("ui-state-error");
         }
     });
-    // console.log(dialog);
 
     // Event Handler für dialogopen registrieren (Vorbelegung der Felder mit den Kontaktdaten aus dem Array)
     dialog.on("dialogopen", function(event) {
         //let dform = this.ownerDocument.forms[0];
-        //console.log(dform);
 
         dform.firstname.value = contacts[contactID].firstname;
         dform.lastname.value = contacts[contactID].lastname;
@@ -337,10 +333,8 @@ $(function() {
         event.preventDefault();
         saveContactData();
     });
-    // console.log(form);
 
     dform = form[0];
-    // console.log(dform);
 
     $("#change").button().on("click", function() {
         dialog.dialog("open");
@@ -528,11 +522,11 @@ $(function() {
      *
      * @author SJ
      * @author GF (splice)
+     * @author DK (sort)
      */
 
     function delContactData() {
 
-        console.log("Löschen bestätigt");
 
         contacts.splice(contactID, 1);
 
@@ -546,6 +540,11 @@ $(function() {
         contactlist.clear();
         contactlist = new List('contactlist', options, contacts);
 
+        // added 20180518 DK
+        contactlist.sort('lastname', {
+            order: "asc"
+        });
+
         // Dialog schliessen
         delDialog.dialog("close");
 
@@ -554,4 +553,84 @@ $(function() {
 
     }
 
+    /* ************* START DANIEL **************************/
+
+    /**
+     * jQuery UI-Dialog-Widget wird instanziiert.
+     *
+     * Mit einer Größe von 600x600px
+     * und diversen Ein- und Ausblendeffekten
+     *
+     * @author DK
+     *
+     */
+    $( "#dialog_qr_code" ).dialog({
+        height: 600,
+        width: 600,
+        autoOpen: false,
+        modal: true,
+        show: {
+            effect: "clip",
+            duration: 1000
+        },
+      hide: {
+        effect: "explode",
+        duration: 1000
+      },
+        close: function( event, ui ) {
+            $('#picture').html('');
+
+        }
+    });
+ 
+    /**
+     * Macht Adressdetails des selektierten Kontakts ausfindig
+     *
+     * @author DK
+     */
+    $( "#opener" ).on( "click", function() {
+        var contact_details = contacts.find(function(elem){
+            return elem.cid==contactID;
+    });
+
+        /**
+         * Link-Rumpf zur QR-Abfrage und Festlegung des Qualitätsniveaus
+         *
+         * @author DK
+         */
+        let link = 'https://chart.apis.google.com/chart?cht=qr&chs=400x400&chl=' 
+            , quality = 'Q';
+
+
+        /**
+         * Bild wird mit einer Größe 400x400 instanziiert
+         * 
+         * @author DK
+         */
+        var myImage = new Image(400, 400);
+
+        /* Bild erhält Link mit Adressdetails im VCard 3.0-Format
+         *
+         * @author DK
+         */
+        myImage.src =  link + 'BEGIN:VCARD%0AVERSION:3.0%0A'
+            + 'N:' + contact_details.lastname + ';' + contact_details.firstname  + ';;%0A'
+            + 'FN:' + contact_details.firstname + '%20' + contact_details.lastname + '%0A'
+            +'TEL;TYPE%3DHOME,VOICE:' + contact_details.phone  + '%0A'
+            + 'ADR;TYPE%3DHOME:;;' + contact_details.street + ';' + contact_details.city + ';' + contact_details.zip + ';%0A' 
+            + 'LABEL;TYPE%3DHOME:' + contact_details.street + '\n' + contact_details.zip + '\ln' + contact_details.city  + '%0A'
+            + 'EMAIL;TYPE%3DPREF,INTERNET:' + contact_details.email + '%0A'
+            +'END:VCARD'
+            + '&chld=' + quality;
+
+        /** An p Element im DOM wird das Bild angehängt
+         *
+         * @author DK
+         */
+        $('#picture').append(myImage);
+
+
+        $( "#dialog_qr_code" ).dialog( "open" );
+    });
+    /******************* ENDE DK *************************/
 });

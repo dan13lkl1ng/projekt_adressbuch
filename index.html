@@ -20,9 +20,6 @@
                <h5>Suchen ...</h5>
                <div id="contactlist">
                   <input class="search" />
-                  <!-- optional, falls Sortierung noch gewünscht ist -->
-                  <!-- <span class="sort" data-sort="lastname">Sort by name</span> -->
-                  <!-- <span class="sort" data-sort="city">Sort by city</span> -->
                   <ul class="collection list"></ul>
                </div>
                <button id="create-address" type="submit">Hinzufügen</button>
@@ -31,7 +28,7 @@
                <!-- Überarbeitet: 16.5.18 // SJ   -->
                <div id="addressfield">
                   <div id="overlay">Wählen Sie links eine Adresse aus</div>
-                  <button id="close" type="submit">Schliessen</button>
+                  <button id="close" type="submit">Schließen</button>
                   <p class="addrLabel">Vorname: <br><span id="addrFirstname" class="addrContent"></span></p>
                   <p class="addrLabel">Nachname: <br><span id="addrLastname" class="addrContent"></span></p>
                   <p class="addrLabel">Straße: <br><span id="addrStreet" class="addrContent"></span></p>
@@ -40,10 +37,10 @@
                   <p class="addrLabel">Email: <br><span id="addrEmail" class="addrContent"></span></p>
                   <p class="addrLabel">Telefon: <br><span id="addrPhone" class="addrContent"></span></p>
                   <p class="addrLabel">Geburtstag: <br><span id="addrBirthday" class="addrContent"></span></p>
-                  <!-- <div id="userMessages"></div> -->
                   <div id="buttons">
                      <button id="change" type="submit">Ändern</button>
                      <button id="delete" type="submit">Löschen</button>
+                     <button id="opener" class="ui-button ui-corner-all ui-widget">QR-Code</button>
                   </div>
                </div>
             </div>
@@ -106,6 +103,9 @@
          <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;">
             </span>Der Kontakt wird unwiderruflich gelöscht! Sind Sie sicher?
          </p>
+      </div>
+      <div id="dialog_qr_code" title="QR-Code">
+          <p id="picture"></p>
       </div>
    </body>
 </html>
