@@ -393,6 +393,9 @@ $(function() {
         if (valid) {
             // einfacher lösbar durch length, dann aber Gefahr der doppelten ID-Vergabe
             let max_cid = contacts.reduce((max, p) => p.cid > max ? p.cid : max, contacts[0].cid);
+
+            // Wandelt eingegebenen String in Datumsobjekt um.
+            let birthday_obj = createDate(birthday2.val());
             contacts.push({
                 'cid': max_cid + 1
                 , 'firstname': firstname2.val()
@@ -402,7 +405,7 @@ $(function() {
                 , 'city': city2.val()
                 , 'email': email2.val()
                 , 'phone': phone2.val()
-                , 'birthday': birthday2.val()
+                , 'birthday': birthday_obj
             });
 
             sendContactDataToServer();
@@ -466,7 +469,7 @@ $(function() {
         dform2.email.value = contacts[contactID].email;
         dform2.phone.value = contacts[contactID].phone;
         dform2.birthday.value = getDateString(contacts[contactID].birthday);
-        updateTips("Pflichtfelder2 sind gekennzeichnet mit *.");
+        updateTips("Pflichtfelder sind gekennzeichnet mit *.");
     });
 
     dform2 = form[0];
