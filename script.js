@@ -83,34 +83,34 @@ function getContactId(event) {
  */
 function addressOut() {
 
-    var fullAddress = contacts[contactID];
+    // var fullAddress = contacts[contactID];
 
-
-    /*
-
-    // Findet Adresse mittels cid
+    // Findet Adresse mittels cid. 20180515 DK
     var fullAddress = contacts.find(function(elem){
-        return elem.cid==contactID;
+        return elem.cid == contactID;
     });
-	
-	*/
 
-    document.getElementById("addrFirstname")
-        .innerHTML = fullAddress.firstname;
-    document.getElementById("addrLastname")
-        .innerHTML = fullAddress.lastname;
-    document.getElementById("addrStreet")
-        .innerHTML = fullAddress.street;
-    document.getElementById("addrZip")
-        .innerHTML = fullAddress.zip;
-    document.getElementById("addrCity")
-        .innerHTML = fullAddress.city;
-    document.getElementById("addrEmail")
-        .innerHTML = fullAddress.email;
-    document.getElementById("addrPhone")
-        .innerHTML = fullAddress.phone;
-    document.getElementById("addrBirthday")
-        .innerHTML = getDateString(fullAddress.birthday);
+    // verhindert weitere Referenzierung, falls Kontakt nicht mehr vorhanden. 20180516 DK
+    if(fullAddress != undefined){
+
+        document.getElementById("addrFirstname")
+            .innerHTML = fullAddress.firstname;
+        document.getElementById("addrLastname")
+            .innerHTML = fullAddress.lastname;
+        document.getElementById("addrStreet")
+            .innerHTML = fullAddress.street;
+        document.getElementById("addrZip")
+            .innerHTML = fullAddress.zip;
+        document.getElementById("addrCity")
+            .innerHTML = fullAddress.city;
+        document.getElementById("addrEmail")
+            .innerHTML = fullAddress.email;
+        document.getElementById("addrPhone")
+            .innerHTML = fullAddress.phone;
+        document.getElementById("addrBirthday")
+            .innerHTML = getDateString(fullAddress.birthday);
+
+    }
 }
 
 /** 
@@ -263,6 +263,7 @@ $(function() {
         if (email.val() != "") {
             valid = valid && checkRegexp(email, emailRegex, "eg. ui@jquery.com");
         }
+
         if (birthday.val() != "") {
             valid = valid && isValidDate(birthday, "Date is not valid.");
         }
@@ -373,24 +374,31 @@ $(function() {
         let valid = true;
         allFields.removeClass("ui-state-error");
 
-        if (firstname2.val() == "" && lastname2.val() == "") {
+        if ( firstname2.val() == '' && lastname2.val() == '' ) {
             firstname2.addClass("ui-state-error");
             lastname2.addClass("ui-state-error");
-            updateTips("Either \"Vorname\" or \"Nachname\" is required!");
+            updateTips("\"Vorname\" oder \"Nachname\" wird benötigt!");
+
             valid = false;
         } else {
             if (firstname2.val() != "") {
-                valid = valid && checkRegexp(firstname2, /^[a-z]([0-9a-z_\s])+$/i, "Name may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
+                valid = valid && checkRegexp(firstname2, /^[a-z]([0-9a-z_\s])+$/i, "Name muss aus a-z, 0-9, Unterstrichen oder Leerzeichen bestehen und mit einem Buchstaben anfangen.");
             }
-            if (lastname.val() != "") {
-                valid = valid && checkRegexp(lastname2, /^[a-z]([0-9a-z_\s])+$/i, "Name may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
+            if (lastname2.val() != "") {
+                valid = valid && checkRegexp(lastname2, /^[a-z]([0-9a-z_\s])+$/i, "Name muss aus a-z, 0-9, Unterstrichen oder Leerzeichen bestehen und mit einem Buchstaben anfangen");
             }
         }
 
-        valid = valid && checkRegexp(email2, emailRegex, "eg. ui@jquery.com");
-        valid = valid && isValidDate(birthday2, "eg. dd.mm.yyyy");
+        if(email2.val() != ""){
+            valid = valid && checkRegexp(email2, emailRegex, "z.B. name@example.com");
+        }
+
+        if(birthday2.val() != ''){
+            valid = valid && isValidDate(birthday2, "z.B. dd.mm.yyyy");
+        }
 
         if (valid) {
+
             // einfacher lösbar durch length, dann aber Gefahr der doppelten ID-Vergabe
             let max_cid = contacts.reduce((max, p) => p.cid > max ? p.cid : max, contacts[0].cid);
 
