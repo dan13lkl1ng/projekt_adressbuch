@@ -1,3 +1,47 @@
+/** Klasse für mehrmals vorkommende Konstrukte
+ *
+ * @author DK
+ **/
+class Helpers {
+
+    /**
+     * Liefert Kontaktdetails abhängig des ID, unabhängig der Position oder des Formats der ID.
+     *
+     * @author DK
+     * @return {Object}   Objekt, welches die Kontaktdetails der markierten Person erhält
+     */
+    static contactDetailsById(){
+        return contacts.find(function(elem){
+            return elem.cid==contactID;
+        });
+    }
+
+    static valuesToDform(elem){
+        elem.firstname.value = contacts[contactID].firstname;
+        elem.lastname.value = contacts[contactID].lastname;
+        elem.street.value = contacts[contactID].street;
+        elem.zip.value = contacts[contactID].zip;
+        elem.city.value = contacts[contactID].city;
+        elem.email.value = contacts[contactID].email;
+        elem.phone.value = contacts[contactID].phone;
+        elem.birthday.value = getDateString(contacts[contactID].birthday);
+    }
+}
+
+class Person {
+    constructor(firstname,lastname,email,phone,birthday,zip,city,street){
+    this._firstname = firstname;
+    this._lastname = lastname;
+    this._email = email;
+    this._phone = phone;
+    this._birthday = birthday;
+    this._zip = zip;
+    this._city = city;
+    this._street = street;
+    }
+}
+
+
 // Hinzugefügt am 15.05.18 - SJ
 var userMessage;
 
@@ -9,6 +53,9 @@ var contactID = 0;
 
 // Globale Variable für das Objekt der Kontaktliste (List.js) - geändert am 15.05.2018, SR
 var contactlist;
+
+// Globales Personendetails-Array
+var person_arr = new Array('firstname','lastname','email','phone','birthday','zip','city','street');
 
 /**
  * Optionen für Kontaktliste werden festgelegt.
@@ -65,10 +112,9 @@ function getDateString(date) {
  *
  */
 function getContactId(event) {
-    // TODO werden beide id's benötigt?
-    var cid = event.currentTarget.firstChild.innerHTML;
+    var cid = contactID = event.currentTarget.firstChild.innerHTML;
 
-    contactID = parseInt(event.currentTarget.firstChild.innerHTML);
+    //contactID = parseInt(event.currentTarget.firstChild.innerHTML);
 
     document.getElementById("overlay")
         .style.display = "none"; // Overlay ausblenden
@@ -85,10 +131,8 @@ function addressOut() {
 
     // var fullAddress = contacts[contactID];
 
-    // Findet Adresse mittels cid. 20180515 DK
-    var fullAddress = contacts.find(function(elem){
-        return elem.cid == contactID;
-    });
+    // Findet Adresse mittels cid. 20180515 DK, OOP 20180516 DK
+    var fullAddress = Helpers.contactDetailsById();
 
     // verhindert weitere Referenzierung, falls Kontakt nicht mehr vorhanden. 20180516 DK
     if(fullAddress != undefined){
@@ -278,7 +322,11 @@ $(function() {
             contacts[contactID].email = email.val();
             contacts[contactID].phone = phone.val();
             // contacts[contactID].birthday = birthday.val();
-            contacts[contactID].birthday = createDate(birthday.val())
+
+            // Verhindert fehlerhaftes Dateobjekt, wenn kein Datum vorhanden ist.
+            let birthday_obj = (birthday.val())?createDate(birthday.val()):'';
+            //contacts[contactID].birthday = createDate(birthday.val());
+            contacts[contactID].birthday = birthday_obj;
 
             sendContactDataToServer();
 
@@ -317,15 +365,7 @@ $(function() {
     // Event Handler für dialogopen registrieren (Vorbelegung der Felder mit den Kontaktdaten aus dem Array)
     dialog.on("dialogopen", function(event) {
         //let dform = this.ownerDocument.forms[0];
-
-        dform.firstname.value = contacts[contactID].firstname;
-        dform.lastname.value = contacts[contactID].lastname;
-        dform.street.value = contacts[contactID].street;
-        dform.zip.value = contacts[contactID].zip;
-        dform.city.value = contacts[contactID].city;
-        dform.email.value = contacts[contactID].email;
-        dform.phone.value = contacts[contactID].phone;
-        dform.birthday.value = getDateString(contacts[contactID].birthday);
+Helpers.valuesToDform(dform);
         updateTips("Pflichtfelder sind gekennzeichnet mit *.");
     });
 
@@ -382,10 +422,10 @@ $(function() {
             valid = false;
         } else {
             if (firstname2.val() != "") {
-                valid = valid && checkRegexp(firstname2, /^[a-z]([0-9a-z_\s])+$/i, "Name muss aus a-z, 0-9, Unterstrichen oder Leerzeichen bestehen und mit einem Buchstaben anfangen.");
+                valid = valid && checkRegexp(firstname2, /^[a-z]([\u00C0-\u017F0-9a-z_\s])+$/i, "Name muss aus a-z, 0-9, Unterstrichen oder Leerzeichen bestehen und mit einem Buchstaben anfangen.");
             }
             if (lastname2.val() != "") {
-                valid = valid && checkRegexp(lastname2, /^[a-z]([0-9a-z_\s])+$/i, "Name muss aus a-z, 0-9, Unterstrichen oder Leerzeichen bestehen und mit einem Buchstaben anfangen");
+                valid = valid && checkRegexp(lastname2, /^[a-z]([\u00C0-\u017F0-9a-z_\s])+$/i, "Name muss aus a-z, 0-9, Unterstrichen oder Leerzeichen bestehen und mit einem Buchstaben anfangen");
             }
         }
 
@@ -402,8 +442,9 @@ $(function() {
             // einfacher lösbar durch length, dann aber Gefahr der doppelten ID-Vergabe
             let max_cid = contacts.reduce((max, p) => p.cid > max ? p.cid : max, contacts[0].cid);
 
-            // Wandelt eingegebenen String in Datumsobjekt um.
-            let birthday_obj = createDate(birthday2.val());
+            // Wandelt eingegebenen String in Datumsobjekt um, wenn Datum eingegeben wurde.
+            let birthday_obj = (birthday2.val())?createDate(birthday2.val()):'';
+            console.log(birthday_obj);
             contacts.push({
                 'cid': max_cid + 1
                 , 'firstname': firstname2.val()
@@ -469,14 +510,7 @@ $(function() {
      * @author DK
      */
     dialog2.on("dialogopen", function(event) {
-        dform2.firstname.value = contacts[contactID].firstname;
-        dform2.lastname.value = contacts[contactID].lastname;
-        dform2.street.value = contacts[contactID].street;
-        dform2.zip.value = contacts[contactID].zip;
-        dform2.city.value = contacts[contactID].city;
-        dform2.email.value = contacts[contactID].email;
-        dform2.phone.value = contacts[contactID].phone;
-        dform2.birthday.value = getDateString(contacts[contactID].birthday);
+        Helpers.valuesToDform(dform2);
         updateTips("Pflichtfelder sind gekennzeichnet mit *.");
     });
 
@@ -496,7 +530,6 @@ $(function() {
      *
      * @author SJ
      */
-
     document.getElementById("close").onclick = showElement;
 
     function showElement() {
@@ -509,7 +542,6 @@ $(function() {
      *
      * @author SJ
      */
-
     delDialog = $("#dialog-confirm").dialog({
         autoOpen: false
         , resizable: false
@@ -537,7 +569,6 @@ $(function() {
      * @author GF (splice)
      * @author DK (sort)
      */
-
     function delContactData() {
 
 
@@ -553,7 +584,7 @@ $(function() {
         contactlist.clear();
         contactlist = new List('contactlist', options, contacts);
 
-        // added 20180518 DK
+        // added 20180516 DK
         contactlist.sort('lastname', {
             order: "asc"
         });
@@ -595,6 +626,7 @@ $(function() {
 
         }
     });
+
  
     /**
      * Macht Adressdetails des selektierten Kontakts ausfindig
@@ -602,9 +634,8 @@ $(function() {
      * @author DK
      */
     $( "#opener" ).on( "click", function() {
-        var contact_details = contacts.find(function(elem){
-            return elem.cid==contactID;
-    });
+
+        var contact_details = Helpers.contactDetailsById();
 
         /**
          * Link-Rumpf zur QR-Abfrage und Festlegung des Qualitätsniveaus
