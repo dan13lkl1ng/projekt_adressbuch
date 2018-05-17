@@ -3,9 +3,9 @@
    <head>
 	<meta charset="utf-8">
     <title>Adressbuch</title>
-	  
-	 <!-- Geändert: 17.5.18 // SJ: Headbereich Verknüpfungen, Sortierung   --> 
-	  
+
+	 <!-- Geändert: 17.5.18 // SJ: Headbereich Verknüpfungen, Sortierung   -->
+
 		<!-- Hinzugefügt: 16.5.18 // SJ   -->
 		<!-- Scrollbar   -->
 		<script src="scroll/simple-scrollbar.min.js"></script>
@@ -20,18 +20,18 @@
 
         <!-- Hinzugefügt: 17.05.2018 DK -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-	  
+
 		<!-- JS   -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<script src="https://unpkg.com/sweetalert2@7.20.5/dist/sweetalert2.all.js"></script>
 		<script src="js/script.js"></script>
-	  
+
 		<!-- Hinzugefügt: 15.5.18 // SJ   -->
 		<!--Google Font   -->
 		<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:300,300i,400,400i,700,700i,800,800i|Merriweather:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-		
+
 		<!-- Verschoben: 17.5.18 // SJ: Styles von DK in CSS Datei   -->
 
    </head>
@@ -43,26 +43,26 @@
                <h5 class="xtraMargin">Suchen ...</h5>  <!-- Überarbeitet: 17.5.18 // SJ: Class   -->
                <div id="contactlist">
                   <input class="search" />
-				  
+
 				  <!-- Überarbeitet: 17.5.18 // SJ: div für Scrollbar   -->
                   <div id="scrollFun" ss-container>
 					  <ul class="collection list"></ul>
 				  </div>
-				  
-				  
+
+
                </div>
                <button id="create-address" type="submit">Hinzufügen</button>
             </div>
             <div id="detailarea">
-			
+
 				<!-- overlay vor addressfield verschoben und Änderungen im CSS: 17.05.18 // SR  -->
 			   <div id="overlay">Wählen Sie links eine Adresse aus</div>
-						   
+
 			   <!-- class hinzugefügt: 17.05.18 // SR   -->
                <div id="addressfield" class="ui-widget-content ui-corner-all noBgColor" style="display:none">
-			   
+
 				<!-- Auskommentiert: 16.5.18 // SJ   <h3 class="ui-widget-header ui-corner-all">Kontaktdaten</h3> -->
-				
+
                   <p class="addrLabel">Vorname: <br><span id="addrFirstname" class="addrContent"></span></p>
                   <p class="addrLabel">Nachname: <br><span id="addrLastname" class="addrContent"></span></p>
                   <p class="addrLabel">Straße: <br><span id="addrStreet" class="addrContent"></span></p>
@@ -74,14 +74,14 @@
                   <div id="buttons">
                      <button id="change" type="submit">Ändern</button>
                      <button id="delete" type="submit">Löschen</button>
-					 
+
 					 <!-- button verschoben und Änderungen im CSS: 17.05.18 // SR   -->
 					 <button id="close" type="submit">Schließen</button>
-					 
+
                      <button id="opener" class="ui-button ui-corner-all ui-widget">QR-Code</button>
                   </div>
                </div>
-			   
+
             </div>
          </div>
       </div>
@@ -137,7 +137,7 @@
          </form>
       </div>
       <div id="users-contain" class="ui-widget"></div>
-	  
+
       <!-- Hinzugefügt: 15.5.18 // SJ   -->
       <div id="dialog-confirm" title="Kontakt löschen">
          <p>
@@ -150,7 +150,7 @@
       <div id="dialog_qr_code" title="QR-Code">
           <p id="picture"></p>
       </div>
-	  
+
       <footer>
           <div id="news"></div>
       </footer>

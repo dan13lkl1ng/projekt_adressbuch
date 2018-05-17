@@ -48,10 +48,10 @@ class Person {
     }
 }
 
-/** Der User kann für sich selbst eine Lieblingsfarbe festlegen. 
+/** Der User kann für sich selbst eine Lieblingsfarbe festlegen.
  *
  * Aber auch andere Kontaktdaten einer normalen Person ablegen.
- */ 
+ */
 class MySelf extends Person {
     constructor(firstname, lastname, email, phone, birthday, zip, city, street, favouriteColor) {
         super(firstname, lastname, email, phone, birthday, zip, city, street);
@@ -106,7 +106,7 @@ function resetSearch() {
 // Verschoben: 16.05.18 - SJ
 /* Datum in String umwandeln -> DD.MM.YYYY
  *
- * @return {string} 
+ * @return {string}
  * @author SR
  */
 function getDateString(date) {
@@ -203,7 +203,7 @@ function addressOut() {
     }
 }
 
-/** 
+/**
  * Kontaktliste nach String konvertieren und an den Server (PHP) schicken.
  *
  * @author SR
@@ -235,7 +235,7 @@ function sendContactDataToServer() {
 
 /* Aus Datum-String ein Datum-Objekt erstellen
  *
- * @return {date object} 
+ * @return {date object}
  * @author SR
  */
 function createDate(dateString) {
@@ -265,10 +265,10 @@ $(function() {
         $('body').css("background-color", me._favouriteColor);
     });
 
-    /**  
-     * Objekt mit Kontaktdaten im JSON-Format, welche mittels Ajax-Funktion importiert werden. 
+    /**
+     * Objekt mit Kontaktdaten im JSON-Format, welche mittels Ajax-Funktion importiert werden.
      *
-     * @author SR 
+     * @author SR
      * @author DK
      **/
     $.getJSON("./database.json", function(data) {
@@ -284,7 +284,7 @@ $(function() {
             contacts[i].cid = i;
         }
 
-        // Listeninstanz wird angelegt.  
+        // Listeninstanz wird angelegt.
         contactlist = new List('contactlist', options, contacts);
         contactlist.sort('lastname', {
             order: "asc"
@@ -435,7 +435,7 @@ $(function() {
         updateTips("Pflichtfelder sind gekennzeichnet mit *.");
     });
 
-    // Form-Objekt holen und Event Handler für submit registrieren 
+    // Form-Objekt holen und Event Handler für submit registrieren
     form = dialog.find("form").on("submit", function(event) {
         event.preventDefault();
         saveContactData();
@@ -472,8 +472,8 @@ $(function() {
 
     /**
      * Führt Validierung durch, versieht falsche Eingaben mit Fehlermeldungen.
-     * 
-     * @return (bool) valid 
+     *
+     * @return (bool) valid
      * @author DK
      */
     function saveContactData2() {
@@ -528,7 +528,7 @@ $(function() {
             // clear list
             contactlist.clear();
 
-            // Liste wird neu angelegt und sortiert. 
+            // Liste wird neu angelegt und sortiert.
             contactlist = new List('contactlist', options, contacts);
             contactlist.sort('lastname', {
                 order: "asc"
@@ -603,7 +603,7 @@ $(function() {
     /* ************* ENDE DANIEL **************************/
 
 
-    /** 
+    /**
      * Adresse ausblenden/Overlay einblenden
      *
      * @author SJ
@@ -623,7 +623,7 @@ $(function() {
     }
 
 
-    /** 
+    /**
      * Löschen Confirm Dialog
      *
      * @author SJ
@@ -648,7 +648,7 @@ $(function() {
         delDialog.dialog("open");
     });
 
-    /** 
+    /**
      * Löschen Funktion
      *
      * @author SJ
@@ -733,7 +733,7 @@ $(function() {
 
         /**
          * Bild wird mit einer Größe 400x400 instanziiert
-         * 
+         *
          * @author DK
          */
         var myImage = new Image(400, 400);
@@ -848,11 +848,11 @@ $(function() {
               //$( "#green" ).slider( "value", 0 );
               //$( "#blue" ).slider( "value", 0 );
 
-              me._favouriteColor = 'rgb(' 
+              me._favouriteColor = 'rgb('
                + $( "#red" ).slider( "value", 255 ) + ','
               + $( "#green" ).slider( "value", 255 ) + ','
               + $( "#blue" ).slider( "value", 255 ) + ')';
-      
+
 
     /******************* ENDE DK *************************/
 });
