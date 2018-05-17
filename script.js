@@ -689,13 +689,15 @@ Helpers.valuesToDform(dform);
         var news_i = 0;
         setInterval(function(){
             document.getElementById('news').innerHTML = result.results[news_i].abstract;
+            //$("#news").animate({width:'toggle'},350);
+
                 console.log(result.results[news_i].abstract);
             if (news_i< result.results.length){
                 news_i++;
             } else {
                 news_i = 0;
             }
-        },3000);
+        },1000);
 
     }).fail(function(err) {
         throw err;
