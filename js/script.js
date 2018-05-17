@@ -142,7 +142,6 @@ function getContactId(event) {
 
     // Overlay ausblenden
     document.getElementById("overlay").style.display = "none";
-    // console.log($( "#overlay" ).attr ("style"));
 
     // document.getElementById("overlay").style.display="block";
 
@@ -249,7 +248,7 @@ $(function() {
         , showCloseButton: true
         , showCancelButton: false
         , focusConfirm: false
-        , confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!'
+        , confirmButtonText: '<i class="fa fa-thumbs-up"></i> Ok!'
         , confirmButtonAriaLabel: 'Thumbs up, great!'
     , }).then(() => {
         $('body').css("background-color", me._favouriteColor);
@@ -412,12 +411,10 @@ $(function() {
             allFields.removeClass("ui-state-error");
         }
     });
-    // console.log(dialog);
 
     // Event Handler für dialogopen registrieren (Vorbelegung der Felder mit den Kontaktdaten aus dem Array)
     dialog.on("dialogopen", function(event) {
         //let dform = this.ownerDocument.forms[0];
-        //console.log(dform);
 
         dform.firstname.value = contacts[contactID].firstname;
         dform.lastname.value = contacts[contactID].lastname;
@@ -435,10 +432,8 @@ $(function() {
         event.preventDefault();
         saveContactData();
     });
-    // console.log(form);
 
     dform = form[0];
-    // console.log(dform);
 
     $("#change").button().on("click", function() {
         // $( "#addressfield" ).hide( "clip", {}, 500 );
@@ -508,7 +503,6 @@ $(function() {
 
             // Wandelt eingegebenen String in Datumsobjekt um, wenn Datum eingegeben wurde.
             let birthday_obj = (birthday2.val()) ? createDate(birthday2.val()) : '';
-            console.log(birthday_obj);
             contacts.push({
                 'cid': max_cid + 1
                 , 'firstname': firstname2.val()
@@ -778,7 +772,6 @@ $(function() {
                 document.getElementById('news').innerHTML = result.results[news_i].abstract;
                 //$("#news").animate({width:'toggle'},350);
 
-                //console.log(result.results[news_i].abstract);
                 if (news_i < result.results.length - 1) {
                     news_i++;
                 } else {
