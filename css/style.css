@@ -1,0 +1,277 @@
+@charset "utf-8";
+
+/* CSS Document for Addressbook*/
+
+	*{
+		box-sizing: border-box;
+	}
+	
+	body{
+		color: white;
+		font-family: 'Merriweather Sans', sans-serif;
+		font-weight: 300;
+		font-size: 14px;
+	}
+	
+	h1{
+		color: #0575e6;
+		font-size: 40px;
+		font-family: 'Merriweather', serif;
+		font-weight: 300;
+	}
+	
+	h5{
+		font-size: 12px;
+		margin: 0;
+		padding: 0;
+	}
+		
+	p{
+		margin: 0;
+	}	
+		
+	#wrapper{
+		padding-top:20px;
+		width: 700px;
+		height: 600px;
+		margin: auto;
+	}
+	
+	
+	.xtraMargin{
+		margin-bottom: 6px;
+	}
+	
+	
+	#contactarea{
+		background-image: linear-gradient(135deg, #0575e6, #00f260);
+		padding: 25px;
+		width: 700px;
+		min-height: 400px;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+	}
+	
+	
+	#listarea{
+		/*background-color: grey;*/
+		position: relative;
+		width: 30%;
+		height: 545px;
+		border: 1px solid white;	
+		margin-right: 25px;
+		padding: 15px;
+	}
+	
+	#contactlist{
+		/*background-color: grey;*/
+		width: 100%;
+		height: 460px;
+	}
+		
+	.search{
+		border: none;
+		width: 100%;
+		margin: 0;
+	}
+	
+	#scrollFun{
+		/*background-color: grey;*/
+		height: 430px;
+		width: 100%;
+		padding: 0;
+	}
+	
+	
+	#detailarea{
+		/*background-color: grey;*/
+		padding: 15px;
+		position: relative;
+		width: 66%;
+		height: 545px;
+		border: 1px solid white; /**/	
+	}
+	
+	.addrLabel{
+		font-size: 12px;
+		font-weight: bold;
+		margin-bottom: 20px;
+	}
+	
+	.addrContent{
+		font-size: 18px;
+		font-weight: 300;
+	}
+	
+	.adressBlock{
+		width: 100px;
+		display: flex;
+		
+	}
+	
+	/* Änderung - SR, 17.05.2018 -> close nach closeOLD */
+	
+	#closeOLD{
+		position: absolute;
+		top: 15px;
+		right:15px;
+		border: none;
+		background-color: white;
+		width: 100px;
+		height: 30px;
+		color: #0495c3;
+		font-size: 14px;
+		letter-spacing: 1px;
+	}
+	
+	#buttons, #create-address{
+		position: absolute;
+		bottom: 15px;
+		right: 15px;
+	}
+
+
+	/* Änderung - SR, 17.05.2018 -> background-color: transparent; z-index: 99; entfernt */
+	
+	#overlay{
+		color: white;
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		/*z-index: 99;*/
+		/*background-image: linear-gradient(135deg, #00f260, #0575e6);*/
+		
+		/*background-color: #0495c3;background-color: transparent;*/
+		height: 543px;
+		width: 100%;
+		text-align: center;
+		font-size: 25px;
+		font-weight: 100;
+		padding: 200px 50px 50px 50px;
+	}
+	
+	#userMessages{
+		font-weight: bold;
+		font-size: 14px;
+		color: red;
+	}
+	
+	 .list span.cid{
+         display:none;
+     }
+	 
+     #contactlist .list li{
+         list-style-type: none;
+		 margin-left: -40px; 
+		 border-bottom: 1px solid white;
+		 padding: 0.9em 0;
+     }
+	 
+	label, input { 
+		display:block; 
+	}
+	
+    input.text { 
+		margin-bottom:12px; 
+		width:95%; 
+		padding: .4em; 
+	}
+	
+    fieldset { 
+		padding:0; 
+		border:0; 
+		margin-top:25px; 
+		}
+		
+    div#users-contain { 
+		width: 350px; 
+		margin: 20px 0; 
+	}
+	
+    div#users-contain table { 
+		margin: 1em 0; 
+		border-collapse: collapse; 
+		width: 100%; 
+	}
+	
+    div#users-contain table td, div#users-contain table th { 
+		border: 1px solid #eee; 
+		padding: .6em 10px; 
+		text-align: left; 
+	}
+	
+    .ui-dialog .ui-state-error { 
+		padding: .3em; 
+	}
+	
+    .validateTips { 
+		border: 1px solid transparent; 
+		padding: 0.3em; 
+	}
+
+	
+/* ******************* Footer + Newsfeed ***************************** */	
+
+
+footer {
+    bottom: 0;
+    left: 50%;
+    position: absolute;
+	z-index: 99;
+}
+
+#news {
+    bottom: 0;
+    height: 5em;
+    left: -50%;
+    padding: 1em;
+    position: relative;
+    text-align: center;
+    width: 700px;
+	background-image: linear-gradient(45deg, #0575e6, #00f260);
+	color: white;
+	font-weight: 400;
+}
+
+
+/* ******************* addressfield ***************************** */	
+// NEU - SR, 17.05.2018
+	
+#addressfield {
+	position: relative;
+	padding: 0.4em;
+	display: none;
+}
+
+#addressfield h3 {
+	margin: 0;
+	padding: 0.4em;
+	text-align: center;
+}
+
+/* ******************* Kontaktliste (DK) ***************************** */	
+
+.collection-item:hover {
+    background-color: #3a22b14f;
+    cursor: pointer;
+}
+  #red, #green, #blue {
+    float: left;
+    clear: left;
+    width: 300px;
+    margin: 15px;
+  }
+  #swatch {
+    width: 120px;
+    height: 100px;
+    margin-top: 18px;
+    margin-left: 350px;
+    background-image: none;
+  }
+  #red .ui-slider-range { background: #ef2929; }
+  #red .ui-slider-handle { border-color: #ef2929; }
+  #green .ui-slider-range { background: #8ae234; }
+  #green .ui-slider-handle { border-color: #8ae234; }
+  #blue .ui-slider-range { background: #729fcf; }
+  #blue .ui-slider-handle { border-color: #729fcf; }
