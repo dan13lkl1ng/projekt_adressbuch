@@ -252,7 +252,7 @@ footer {
 /* ******************* Kontaktliste ***************************** */
 
 .collection-item:hover {
-  background-color: #3a22b14f;
+  background-color: rgba(58,34,177,0.31);
   cursor: pointer;
 }
 
@@ -310,4 +310,9 @@ footer {
 #blue .ui-slider-handle {
   border: 1px solid blue;
   border-radius: 2px;
+}
+
+#contactarea,
+#news {
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 }
