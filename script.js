@@ -10,13 +10,13 @@ class Helpers {
      * @author DK
      * @return {Object}   Objekt, welches die Kontaktdetails der markierten Person erhält
      */
-    static contactDetailsById(){
-        return contacts.find(function(elem){
-            return elem.cid==contactID;
+    static contactDetailsById() {
+        return contacts.find(function(elem) {
+            return elem.cid == contactID;
         });
     }
 
-    static valuesToDform(elem){
+    static valuesToDform(elem) {
         elem.firstname.value = contacts[contactID].firstname;
         elem.lastname.value = contacts[contactID].lastname;
         elem.street.value = contacts[contactID].street;
@@ -29,7 +29,7 @@ class Helpers {
 }
 
 class Person {
-    constructor(firstname,lastname,email,phone,birthday,zip,city,street){
+    constructor(firstname, lastname, email, phone, birthday, zip, city, street) {
         this._firstname = firstname;
         this._lastname = lastname;
         this._email = email;
@@ -42,9 +42,9 @@ class Person {
 }
 
 class MySelf extends Person {
-    constructor(firstname,lastname,email,phone,birthday,zip,city,street, favouriteColor){
-        super(firstname,lastname,email,phone,birthday,zip,city,street);
-            this._favouriteColor = favouriteColor;
+    constructor(firstname, lastname, email, phone, birthday, zip, city, street, favouriteColor) {
+        super(firstname, lastname, email, phone, birthday, zip, city, street);
+        this._favouriteColor = favouriteColor;
 
 
     }
@@ -52,7 +52,8 @@ class MySelf extends Person {
 
 }
 
-var me = new MySelf('Daniel','Kling','d_kling@web.de','0175...','10.07.1984','76646','Bruchsal','Tulpenweg 2','yellow');
+var me = new MySelf('Max', 'Mustermann', 'max@mustermann.de', '0123456789', '01.10.1980', '76131', 'Karlsruhe', 'Bahnhofsstraße 1', 'yellow');
+
 // Hinzugefügt am 15.05.18 - SJ
 var userMessage;
 
@@ -66,7 +67,7 @@ var contactID = 0;
 var contactlist;
 
 // Globales Personendetails-Array
-var person_arr = new Array('firstname','lastname','email','phone','birthday','zip','city','street');
+var person_arr = new Array('firstname', 'lastname', 'email', 'phone', 'birthday', 'zip', 'city', 'street');
 
 /**
  * Optionen für Kontaktliste werden festgelegt.
@@ -114,6 +115,17 @@ function getDateString(date) {
     return dateStr;
 }
 
+// Callback function to bring a hidden box back
+function callbackbox() {
+    setTimeout(function() {
+        addressOut();
+        $("#addressfield").fadeIn();
+    }, 250);
+};
+
+// toggle address details
+var toggleAddrDetails = false;
+
 /**
  * ID/cid des angeglickten Kontakts wird ausgegeben.
  *
@@ -121,17 +133,31 @@ function getDateString(date) {
  * @author: DK
  * @author: Sandra
  *
+ * @changes: Stefan at 17.05.2018 - Animation effect
  */
 function getContactId(event) {
     var cid = contactID = event.currentTarget.firstChild.innerHTML;
 
     //contactID = parseInt(event.currentTarget.firstChild.innerHTML);
 
-    document.getElementById("overlay")
-        .style.display = "none"; // Overlay ausblenden
+    // Overlay ausblenden
+    document.getElementById("overlay").style.display = "none";
+    // console.log($( "#overlay" ).attr ("style"));
 
-    addressOut();
+    // document.getElementById("overlay").style.display="block";
 
+    if (toggleAddrDetails) {
+        // hide address details
+        $("#addressfield").hide("drop", {}, 250, callbackbox);
+
+        // toggleAddrDetails = false;
+    } else {
+        addressOut();
+        // show address details
+        $("#addressfield").show("drop", {}, 250);
+
+        toggleAddrDetails = true;
+    }
 }
 
 /**
@@ -146,7 +172,7 @@ function addressOut() {
     //var fullAddress = Helpers.contactDetailsById();
 
     // verhindert weitere Referenzierung, falls Kontakt nicht mehr vorhanden. 20180516 DK
-    if(fullAddress != undefined){
+    if (fullAddress != undefined) {
 
         document.getElementById("addrFirstname")
             .innerHTML = fullAddress.firstname;
@@ -183,17 +209,17 @@ function sendContactDataToServer() {
             neuedaten: prepared
         })
         .done(function(data) {
-             swal({
-               title: "Done",
-               text: "Erfolgreich übermittelt",
-               type: "success", 
-             });
+            swal({
+                title: "Done"
+                , text: "Erfolgreich übermittelt"
+                , type: "success"
+            , });
         }).fail(function(data) {
-             swal({
-              title: "Oooops",
-              text: "Übermittlung schiefgelaufen",
-              type: "error",
-            }); 
+            swal({
+                title: "Oooops"
+                , text: "Übermittlung schiefgelaufen"
+                , type: "error"
+            , });
         });
 }
 
@@ -214,21 +240,19 @@ function createDate(dateString) {
 $(function() {
 
     swal({
-      title: 'Bitte <i>Lieblingsfarbe</i> wählen',
-      type: 'info',
-      html:
-            '<div id="red"></div>' + 
-            '<div id="green"></div>' + 
-            '<div id="blue"></div>' + 
-            '<div id="swatch" class="ui-widget-content ui-corner-all"></div>',
-              showCloseButton: true,
-              showCancelButton: true,
-              focusConfirm: false,
-              confirmButtonText:
-                '<i class="fa fa-thumbs-up"></i> Great!',
-              confirmButtonAriaLabel: 'Thumbs up, great!',
-    }).then(()=>{
-          $('body').css("background-color", me._favouriteColor);
+        title: 'Bitte <i>Lieblingsfarbe</i> wählen'
+        , type: 'info'
+        , html: '<div id="red"></div>' +
+            '<div id="green"></div>' +
+            '<div id="blue"></div>' +
+            '<div id="swatch" class="ui-widget-content ui-corner-all"></div>'
+        , showCloseButton: true
+        , showCancelButton: false
+        , focusConfirm: false
+        , confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!'
+        , confirmButtonAriaLabel: 'Thumbs up, great!'
+    , }).then(() => {
+        $('body').css("background-color", me._favouriteColor);
     });
 
     /**  
@@ -322,23 +346,22 @@ $(function() {
         if (firstname.val() == "" && lastname.val() == "") {
             firstname.addClass("ui-state-error");
             lastname.addClass("ui-state-error");
-            updateTips("Either \"Vorname\" or \"Nachname\" is required!");
+            updateTips("\"Vorname\" oder \"Nachname\" wird benötigt!");
             valid = false;
         } else {
             if (firstname.val() != "") {
-                valid = valid && checkRegexp(firstname, /^[a-z]([\u00C0-\u017F0-9a-z_\s])+$/i, "Name may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
+                valid = valid && checkRegexp(firstname, /^[a-z]([\u00C0-\u017F0-9a-z_\s])+$/i, "Name muss aus a-z, 0-9, Unterstrichen oder Leerzeichen bestehen und mit einem Buchstaben anfangen.");
             }
             if (lastname.val() != "") {
-                valid = valid && checkRegexp(lastname, /^[a-z]([\u00C0-\u017F0-9a-z_\s])+$/i, "Name may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
+                valid = valid && checkRegexp(lastname, /^[a-z]([\u00C0-\u017F0-9a-z_\s])+$/i, "Name muss aus a-z, 0-9, Unterstrichen oder Leerzeichen bestehen und mit einem Buchstaben anfangen.");
             }
         }
 
         if (email.val() != "") {
-            valid = valid && checkRegexp(email, emailRegex, "eg. ui@jquery.com");
+            valid = valid && checkRegexp(email, emailRegex, "z.B. name@example.com");
         }
-
         if (birthday.val() != "") {
-            valid = valid && isValidDate(birthday, "Date is not valid.");
+            valid = valid && isValidDate(birthday, "Kein gültiges Datum.");
         }
 
         if (valid) {
@@ -350,12 +373,9 @@ $(function() {
             contacts[contactID].city = city.val();
             contacts[contactID].email = email.val();
             contacts[contactID].phone = phone.val();
-            // contacts[contactID].birthday = birthday.val();
-
-            // Verhindert fehlerhaftes Dateobjekt, wenn kein Datum vorhanden ist.
-            let birthday_obj = (birthday.val())?createDate(birthday.val()):'';
-            //contacts[contactID].birthday = createDate(birthday.val());
-            contacts[contactID].birthday = birthday_obj;
+            if (birthday.val() != "") {
+                contacts[contactID].birthday = createDate(birthday.val())
+            }
 
             sendContactDataToServer();
 
@@ -368,6 +388,8 @@ $(function() {
             // reset search field
             resetSearch();
 
+            $("#addressfield").show("drop", {}, 250);
+
             dialog.dialog("close");
         }
         return valid;
@@ -376,8 +398,8 @@ $(function() {
     // Variable dialog mit Widget 'Dialog' von jQuery UI initialisieren
     dialog = $("#dialog-form").dialog({
         autoOpen: false
-        , height: 400
-        , width: 350
+        , height: 650
+        , width: 450
         , modal: true
         , buttons: {
             "Save": saveContactData
@@ -390,11 +412,21 @@ $(function() {
             allFields.removeClass("ui-state-error");
         }
     });
+    // console.log(dialog);
 
     // Event Handler für dialogopen registrieren (Vorbelegung der Felder mit den Kontaktdaten aus dem Array)
     dialog.on("dialogopen", function(event) {
         //let dform = this.ownerDocument.forms[0];
-        Helpers.valuesToDform(dform);
+        //console.log(dform);
+
+        dform.firstname.value = contacts[contactID].firstname;
+        dform.lastname.value = contacts[contactID].lastname;
+        dform.street.value = contacts[contactID].street;
+        dform.zip.value = contacts[contactID].zip;
+        dform.city.value = contacts[contactID].city;
+        dform.email.value = contacts[contactID].email;
+        dform.phone.value = contacts[contactID].phone;
+        dform.birthday.value = getDateString(contacts[contactID].birthday);
         updateTips("Pflichtfelder sind gekennzeichnet mit *.");
     });
 
@@ -403,10 +435,13 @@ $(function() {
         event.preventDefault();
         saveContactData();
     });
+    // console.log(form);
 
     dform = form[0];
+    // console.log(dform);
 
     $("#change").button().on("click", function() {
+        // $( "#addressfield" ).hide( "clip", {}, 500 );
         dialog.dialog("open");
     });
 
@@ -443,7 +478,7 @@ $(function() {
         let valid = true;
         allFields2.removeClass("ui-state-error");
 
-        if ( firstname2.val() == '' && lastname2.val() == '' ) {
+        if (firstname2.val() == '' && lastname2.val() == '') {
             firstname2.addClass("ui-state-error");
             lastname2.addClass("ui-state-error");
             updateTips("\"Vorname\" oder \"Nachname\" wird benötigt!");
@@ -458,21 +493,21 @@ $(function() {
             }
         }
 
-        if(email2.val() != ""){
+        if (email2.val() != "") {
             valid = valid && checkRegexp(email2, emailRegex, "z.B. name@example.com");
         }
 
-        if(birthday2.val() != ''){
+        if (birthday2.val() != '') {
             valid = valid && isValidDate(birthday2, "z.B. dd.mm.yyyy");
         }
 
         if (valid) {
-
+            contactID = contacts.length;
             // einfacher lösbar durch length, dann aber Gefahr der doppelten ID-Vergabe
             let max_cid = contacts.reduce((max, p) => p.cid > max ? p.cid : max, contacts[0].cid);
 
             // Wandelt eingegebenen String in Datumsobjekt um, wenn Datum eingegeben wurde.
-            let birthday_obj = (birthday2.val())?createDate(birthday2.val()):'';
+            let birthday_obj = (birthday2.val()) ? createDate(birthday2.val()) : '';
             console.log(birthday_obj);
             contacts.push({
                 'cid': max_cid + 1
@@ -500,6 +535,11 @@ $(function() {
 
             // refresh contact details
             addressOut();
+
+            $("#addressfield").show("drop", {}, 250);
+
+            // Damit Auffdorderung zur Adressauswahl bei Adressanzeige wieder deaktiviert wird
+            $("#addressfield").hide("drop", {}, 250);
 
             $("input[type='text']").val('');
 
@@ -548,6 +588,13 @@ $(function() {
     $("#create-address")
         .button()
         .on("click", function() {
+
+            if (toggleAddrDetails) {
+                // hide address details
+                $("#addressfield").hide("clip", {}, 500);
+                document.getElementById("overlay").style.display = "block";
+            }
+
             dialog2.dialog("open");
         });
 
@@ -558,11 +605,19 @@ $(function() {
      * Adresse ausblenden/Overlay einblenden
      *
      * @author SJ
+     * @author SR (dynamisch)
      */
-    document.getElementById("close").onclick = showElement;
+
+    // document.getElementById("close").onclick = showElement;
+    $("#close").button().on("click", showElement);
 
     function showElement() {
+
+        $("#addressfield").hide("drop", {}, 500);
+
         document.getElementById("overlay").style.display = "block";
+
+        toggleAddrDetails = false;
     }
 
 
@@ -637,32 +692,32 @@ $(function() {
      * @author DK
      *
      */
-    $( "#dialog_qr_code" ).dialog({
-        height: 600,
-        width: 600,
-        autoOpen: false,
-        modal: true,
-        show: {
-            effect: "clip",
-            duration: 1000
-        },
-      hide: {
-        effect: "explode",
-        duration: 1000
-      },
-        close: function( event, ui ) {
+    $("#dialog_qr_code").dialog({
+        height: 600
+        , width: 600
+        , autoOpen: false
+        , modal: true
+        , show: {
+            effect: "clip"
+            , duration: 1000
+        }
+        , hide: {
+            effect: "explode"
+            , duration: 1000
+        }
+        , close: function(event, ui) {
             $('#picture').html('');
 
         }
     });
 
- 
+
     /**
      * Macht Adressdetails des selektierten Kontakts ausfindig
      *
      * @author DK
      */
-    $( "#opener" ).on( "click", function() {
+    $("#opener").on("click", function() {
 
         var contact_details = Helpers.contactDetailsById();
 
@@ -671,7 +726,7 @@ $(function() {
          *
          * @author DK
          */
-        let link = 'https://chart.apis.google.com/chart?cht=qr&chs=400x400&chl=' 
+        let link = 'https://chart.apis.google.com/chart?cht=qr&chs=400x400&chl='
             , quality = 'Q';
 
 
@@ -686,15 +741,15 @@ $(function() {
          *
          * @author DK
          */
-        myImage.src =  link + 'BEGIN:VCARD%0AVERSION:3.0%0A'
-            + 'N:' + contact_details.lastname + ';' + contact_details.firstname  + ';;%0A'
-            + 'FN:' + contact_details.firstname + '%20' + contact_details.lastname + '%0A'
-            +'TEL;TYPE%3DHOME,VOICE:' + contact_details.phone  + '%0A'
-            + 'ADR;TYPE%3DHOME:;;' + contact_details.street + ';' + contact_details.city + ';' + contact_details.zip + ';%0A' 
-            + 'LABEL;TYPE%3DHOME:' + contact_details.street + '\n' + contact_details.zip + '\ln' + contact_details.city  + '%0A'
-            + 'EMAIL;TYPE%3DPREF,INTERNET:' + contact_details.email + '%0A'
-            +'END:VCARD'
-            + '&chld=' + quality;
+        myImage.src = link + 'BEGIN:VCARD%0AVERSION:3.0%0A' +
+            'N:' + contact_details.lastname + ';' + contact_details.firstname + ';;%0A' +
+            'FN:' + contact_details.firstname + '%20' + contact_details.lastname + '%0A' +
+            'TEL;TYPE%3DHOME,VOICE:' + contact_details.phone + '%0A' +
+            'ADR;TYPE%3DHOME:;;' + contact_details.street + ';' + contact_details.city + ';' + contact_details.zip + ';%0A' +
+            'LABEL;TYPE%3DHOME:' + contact_details.street + '\n' + contact_details.zip + '\ln' + contact_details.city + '%0A' +
+            'EMAIL;TYPE%3DPREF,INTERNET:' + contact_details.email + '%0A' +
+            'END:VCARD' +
+            '&chld=' + quality;
 
         /** An p Element im DOM wird das Bild angehängt
          *
@@ -703,7 +758,7 @@ $(function() {
         $('#picture').append(myImage);
 
 
-        $( "#dialog_qr_code" ).dialog( "open" );
+        $("#dialog_qr_code").dialog("open");
     });
 
     var url = "https://api.nytimes.com/svc/topstories/v2/world.json";
@@ -712,28 +767,71 @@ $(function() {
     });
 
     $.ajax({
-        url: url,
-        method: 'GET',
-    }).done(function(result) {
+        url: url
+        , method: 'GET'
+    , }).done(function(result) {
         var news_i = 0;
-        setInterval(function(){
-            if(result.results[news_i].abstract == undefined){
+        setInterval(function() {
+            if (result.results[news_i].abstract == undefined) {
                 return false;
             } else {
                 document.getElementById('news').innerHTML = result.results[news_i].abstract;
                 //$("#news").animate({width:'toggle'},350);
 
                 //console.log(result.results[news_i].abstract);
-                if (news_i < result.results.length -1 ){
+                if (news_i < result.results.length - 1) {
                     news_i++;
                 } else {
                     news_i = 0;
                 }
-            } 
-        },3000);
+            }
+        }, 3000);
 
     }).fail(function(err) {
         throw err;
     });
+
+              function hexFromRGB(r, g, b) {
+                  var hex = [
+                      r.toString( 16 ),
+                      g.toString( 16 ),
+                      b.toString( 16 )
+                  ];
+                  $.each( hex, function( nr, val ) {
+                      if ( val.length === 1 ) {
+                          hex[ nr ] = "0" + val;
+                      }
+                  });
+                  return hex.join( "" ).toUpperCase();
+              }
+
+              function refreshSwatch() {
+                  var red = $( "#red" ).slider( "value" ),
+                      green = $( "#green" ).slider( "value" ),
+                      blue = $( "#blue" ).slider( "value" ),
+                      hex = hexFromRGB( red, green, blue );
+                  me._favouriteColor = '#' + hex;
+                  $( "#swatch" ).css( "background-color", "#" + hex );
+              }
+
+              $( "#red, #green, #blue" ).slider({
+                  orientation: "horizontal",
+                  range: "min",
+                  max: 255,
+                  value: 127,
+                  slide: refreshSwatch,
+                  change: refreshSwatch
+              });
+
+              //$( "#red" ).slider( "value", 0 );
+              //$( "#green" ).slider( "value", 0 );
+              //$( "#blue" ).slider( "value", 0 );
+
+              me._favouriteColor = 'rgb(' 
+               + $( "#red" ).slider( "value", 255 ) + ','
+              + $( "#green" ).slider( "value", 255 ) + ','
+              + $( "#blue" ).slider( "value", 255 ) + ')';
+      
+
     /******************* ENDE DK *************************/
 });

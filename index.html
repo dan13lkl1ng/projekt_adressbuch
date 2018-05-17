@@ -1,82 +1,65 @@
 <!DOCTYPE html>
 <html lang="de">
    <head>
-      <meta charset="UTF-8">
-      <title>Kontakte</title>
-      <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:300,300i,400,400i,700,700i,800,800i|Merriweather:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-      <link href="style.css" rel="stylesheet" type="text/css">
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-      <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
-      <script src="https://unpkg.com/sweetalert2@7.20.5/dist/sweetalert2.all.js"></script>
-      <script src="script.js"></script>
-      <style>
-         footer {
-         bottom: 0;
-         left: 50%;
-         position: absolute;
-         }
-         #news {
-         background-color: #555;
-         bottom: 0;
-         height: 4em;
-         left: -50%;
-         padding: .3em;
-         position: relative;
-         text-align: center;
-         width: 700px;
-         }
-         .collection-item:hover {
-         background-color: #3a22b14f;
-         cursor: pointer;
-         }
-         #test {
-         width: 100px;
-         height: 100px;
-         background-color: blue;
-         }
-      </style>
-      <style>
-         #red, #green, #blue {
-         float: left;
-         clear: left;
-         width: 300px;
-         margin: 15px;
-         }
-         #swatch {
-         width: 120px;
-         height: 100px;
-         margin-top: 18px;
-         margin-left: 350px;
-         background-image: none;
-         }
-         #red .ui-slider-range { background: #ef2929; }
-         #red .ui-slider-handle { border-color: #ef2929; }
-         #green .ui-slider-range { background: #8ae234; }
-         #green .ui-slider-handle { border-color: #8ae234; }
-         #blue .ui-slider-range { background: #729fcf; }
-         #blue .ui-slider-handle { border-color: #729fcf; }
-      </style>
+	<meta charset="utf-8">
+    <title>Adressbuch</title>
+	  
+	 <!-- Geändert: 17.5.18 // SJ: Headbereich Verknüpfungen, Sortierung   --> 
+	  
+		<!-- Hinzugefügt: 16.5.18 // SJ   -->
+		<!-- Scrollbar   -->
+		<script src="scroll/simple-scrollbar.min.js"></script>
+		<link rel="stylesheet" href="scroll/simple-scrollbar.css">
+
+		<!-- CSS   -->
+		<!-- Geändert: 16.5.18 // SJ <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">  -->
+		<link href="css/jquery-ui.css" rel="stylesheet" type="text/css">
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<!-- Hinzugefügt: 17.5.18 // SJ   -->
+		<link href="css/jquery-ui.theme.css" rel="stylesheet" type="text/css">
+	  
+		<!-- JS   -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="https://unpkg.com/sweetalert2@7.20.5/dist/sweetalert2.all.js"></script>
+		<script src="script.js"></script>
+	  
+		<!-- Hinzugefügt: 15.5.18 // SJ   -->
+		<!--Google Font   -->
+		<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:300,300i,400,400i,700,700i,800,800i|Merriweather:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+		
+		<!-- Verschoben: 17.5.18 // SJ: Styles von DK in CSS Datei   -->
+
    </head>
    <body>
       <div id="wrapper">
          <h1>Adressbuch</h1>
          <div id="contactarea">
             <div id="listarea">
-               <h5>Suchen ...</h5>
+               <h5 class="xtraMargin">Suchen ...</h5>  <!-- Überarbeitet: 17.5.18 // SJ: Class   -->
                <div id="contactlist">
                   <input class="search" />
-                  <ul class="collection list"></ul>
+				  
+				  <!-- Überarbeitet: 17.5.18 // SJ: div für Scrollbar   -->
+                  <div id="scrollFun" ss-container>
+					  <ul class="collection list"></ul>
+				  </div>
+				  
+				  
                </div>
                <button id="create-address" type="submit">Hinzufügen</button>
             </div>
             <div id="detailarea">
-               <!-- Überarbeitet: 16.5.18 // SJ   -->
-               <div id="addressfield">
-                  <div id="overlay">Wählen Sie links eine Adresse aus</div>
-                  <button id="close" type="submit">Schließen</button>
+			
+				<!-- overlay vor addressfield verschoben und Änderungen im CSS: 17.05.18 // SR  -->
+			   <div id="overlay">Wählen Sie links eine Adresse aus</div>
+						   
+			   <!-- class hinzugefügt: 17.05.18 // SR   -->
+               <div id="addressfield" class="ui-widget-content ui-corner-all noBgColor" style="display:none">
+			   
+				<!-- Auskommentiert: 16.5.18 // SJ   <h3 class="ui-widget-header ui-corner-all">Kontaktdaten</h3> -->
+				
                   <p class="addrLabel">Vorname: <br><span id="addrFirstname" class="addrContent"></span></p>
                   <p class="addrLabel">Nachname: <br><span id="addrLastname" class="addrContent"></span></p>
                   <p class="addrLabel">Straße: <br><span id="addrStreet" class="addrContent"></span></p>
@@ -88,9 +71,14 @@
                   <div id="buttons">
                      <button id="change" type="submit">Ändern</button>
                      <button id="delete" type="submit">Löschen</button>
+					 
+					 <!-- button verschoben und Änderungen im CSS: 17.05.18 // SR   -->
+					 <button id="close" type="submit">Schließen</button>
+					 
                      <button id="opener" class="ui-button ui-corner-all ui-widget">QR-Code</button>
                   </div>
                </div>
+			   
             </div>
          </div>
       </div>
@@ -100,21 +88,21 @@
          <form>
             <fieldset>
                <label for="firstname">Vorname (*)</label>
-               <input type="text" name="firstname" id="firstname" value="" class="text ui-widget-content ui-corner-all">
+               <input type="text" name="firstname" id="firstname" value="" class="text ui-widget-content ui-corner-all bgGreen">
                <label for="lastname">Nachname (*)</label>
-               <input type="text" name="lastname" id="lastname" value="" class="text ui-widget-content ui-corner-all">
+               <input type="text" name="lastname" id="lastname" value="" class="text ui-widget-content ui-corner-all bgGreen">
                <label for="street">Straße</label>
-               <input type="text" name="street" id="street" value="" class="text ui-widget-content ui-corner-all">
+               <input type="text" name="street" id="street" value="" class="text ui-widget-content ui-corner-all bgGreen">
                <label for="zip">PLZ</label>
-               <input type="text" name="zip" id="zip" value="" class="text ui-widget-content ui-corner-all">
+               <input type="text" name="zip" id="zip" value="" class="text ui-widget-content ui-corner-all bgGreen">
                <label for="city">Ort</label>
-               <input type="text" name="city" id="city" value="" class="text ui-widget-content ui-corner-all">
+               <input type="text" name="city" id="city" value="" class="text ui-widget-content ui-corner-all bgGreen">
                <label for="email">E-Mail</label>
-               <input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
+               <input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all bgGreen">
                <label for="phone">Telefonnummer</label>
-               <input type="text" name="phone" id="phone" value="" class="text ui-widget-content ui-corner-all">
+               <input type="text" name="phone" id="phone" value="" class="text ui-widget-content ui-corner-all bgGreen">
                <label for="birthday">Geburtstag (TT.MM.JJJJ)</label>
-               <input type="text" name="birthday" id="birthday" value="" class="text ui-widget-content ui-corner-all">
+               <input type="text" name="birthday" id="birthday" value="" class="text ui-widget-content ui-corner-all bgGreen">
                <!-- Allow form submission with keyboard without duplicating the dialog button -->
                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
             </fieldset>
@@ -125,80 +113,43 @@
          <form>
             <fieldset>
                <label for="firstname">Vorname (*)</label>
-               <input type="text" name="firstname" id="firstname2" value="" class="text ui-widget-content ui-corner-all" autocomplete="off">
+               <input type="text" name="firstname" id="firstname2" value="" class="text ui-widget-content ui-corner-all bgGreen" autocomplete="off">
                <label for="lastname">Nachname (*)</label>
-               <input type="text" name="lastname" id="lastname2" value="" class="text ui-widget-content ui-corner-all" autocomplete="off">
+               <input type="text" name="lastname" id="lastname2" value="" class="text ui-widget-content ui-corner-all bgGreen" autocomplete="off">
                <label for="street">Straße</label>
-               <input type="text" name="street" id="street2" value="" class="text ui-widget-content ui-corner-all" autocomplete="off">
+               <input type="text" name="street" id="street2" value="" class="text ui-widget-content ui-corner-all bgGreen" autocomplete="off">
                <label for="zip">PLZ</label>
-               <input type="text" name="zip" id="zip2" value="" class="text ui-widget-content ui-corner-all" autocomplete="off">
+               <input type="text" name="zip" id="zip2" value="" class="text ui-widget-content ui-corner-all bgGreen" autocomplete="off">
                <label for="city">Ort</label>
-               <input type="text" name="city" id="city2" value="" class="text ui-widget-content ui-corner-all" autocomplete="off">
+               <input type="text" name="city" id="city2" value="" class="text ui-widget-content ui-corner-all bgGreen" autocomplete="off">
                <label for="email">E-Mail</label>
-               <input type="text" name="email" id="email2" value="" class="text ui-widget-content ui-corner-all" autocomplete="off">
+               <input type="text" name="email" id="email2" value="" class="text ui-widget-content ui-corner-all bgGreen" autocomplete="off">
                <label for="phone">Telefonnummer</label>
-               <input type="text" name="phone" id="phone2" value="" class="text ui-widget-content ui-corner-all" autocomplete="off">
+               <input type="text" name="phone" id="phone2" value="" class="text ui-widget-content ui-corner-all bgGreen" autocomplete="off">
                <label for="birthday">Geburtstag (TT.MM.JJJJ)</label>
-               <input type="text" name="birthday" id="birthday2" value="" class="text ui-widget-content ui-corner-all" autocomplete="off">
+               <input type="text" name="birthday" id="birthday2" value="" class="text ui-widget-content ui-corner-all bgGreen" autocomplete="off">
                <!-- Allow form submission with keyboard without duplicating the dialog button -->
                <input type="button" tabindex="-1" style="position:absolute; top:-1000px">
             </fieldset>
          </form>
       </div>
       <div id="users-contain" class="ui-widget"></div>
+	  
       <!-- Hinzugefügt: 15.5.18 // SJ   -->
       <div id="dialog-confirm" title="Kontakt löschen">
-         <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;">
-            </span>Der Kontakt wird unwiderruflich gelöscht! Sind Sie sicher?
+         <p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>
+			Der Kontakt wird unwiderruflich gelöscht! <br>Sind Sie wirklich sicher?
          </p>
       </div>
+
+	  <!-- Hinzugefügt: 17.5.18 // DK   -->
       <div id="dialog_qr_code" title="QR-Code">
-         <p id="picture"></p>
+          <p id="picture"></p>
       </div>
+	  
       <footer>
-         <div id="news"></div>
+          <div id="news"></div>
       </footer>
-      <script>
-         $( function() {
-             function hexFromRGB(r, g, b) {
-                 var hex = [
-                     r.toString( 16 ),
-                     g.toString( 16 ),
-                     b.toString( 16 )
-                 ];
-                 $.each( hex, function( nr, val ) {
-                     if ( val.length === 1 ) {
-                         hex[ nr ] = "0" + val;
-                     }
-                 });
-                 return hex.join( "" ).toUpperCase();
-             }
-         
-             function refreshSwatch() {
-                 var red = $( "#red" ).slider( "value" ),
-                     green = $( "#green" ).slider( "value" ),
-                     blue = $( "#blue" ).slider( "value" ),
-                     hex = hexFromRGB( red, green, blue );
-                 me._favouriteColor = '#' + hex;
-                 $( "#swatch" ).css( "background-color", "#" + hex );
-             }
-         
-             $( "#red, #green, #blue" ).slider({
-                 orientation: "horizontal",
-                 range: "min",
-                 max: 255,
-                 value: 127,
-                 slide: refreshSwatch,
-                 change: refreshSwatch
-             });
-             $( "#red" ).slider( "value", 255 );
-             $( "#green" ).slider( "value", 140 );
-             $( "#blue" ).slider( "value", 60 );
-             me._favouriteColor = 'rgb(' 
-              + $( "#red" ).slider( "value", 255 ) + ','
-             + $( "#green" ).slider( "value", 140 ) + ','
-             + $( "#blue" ).slider( "value", 60 ) + ')';
-         });
-      </script>
    </body>
 </html>
