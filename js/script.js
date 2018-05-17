@@ -58,7 +58,6 @@ class MySelf extends Person {
         this._favouriteColor = favouriteColor;
     }
 
-
 }
 
 // Instanziierung der eigenen Person am 17.05.2018 DK
@@ -232,7 +231,6 @@ function sendContactDataToServer() {
         });
 }
 
-
 /* Aus Datum-String ein Datum-Objekt erstellen
  *
  * @return {date object}
@@ -290,7 +288,6 @@ $(function() {
             order: "asc"
         });
     });
-
 
     /* ************* START STEFAN **************************/
 
@@ -450,7 +447,6 @@ $(function() {
 
     /* ************* ENDE STEFAN **************************/
 
-
     /* ************* START DANIEL **************************/
 
     /**
@@ -468,7 +464,6 @@ $(function() {
         , phone2 = $("#phone2")
         , birthday2 = $("#birthday2")
         , allFields2 = $([]).add(firstname2).add(lastname2).add(email2).add(birthday2);
-
 
     /**
      * Führt Validierung durch, versieht falsche Eingaben mit Fehlermeldungen.
@@ -534,7 +529,6 @@ $(function() {
                 order: "asc"
             });
 
-
             // refresh contact details
             addressOut();
 
@@ -549,7 +543,6 @@ $(function() {
         }
         return valid;
     }
-
 
     /**
      * Widget "Dialog" aus jQuery UI wird initialisieren.
@@ -573,7 +566,6 @@ $(function() {
                 allFields.removeClass("ui-state-error");
             }
         });
-
 
     /**
      * Eventhandler für Dialog und Wertübergabe.
@@ -602,7 +594,6 @@ $(function() {
 
     /* ************* ENDE DANIEL **************************/
 
-
     /**
      * Adresse ausblenden/Overlay einblenden
      *
@@ -621,7 +612,6 @@ $(function() {
 
         toggleAddrDetails = false;
     }
-
 
     /**
      * Löschen Confirm Dialog
@@ -643,7 +633,6 @@ $(function() {
         }
     });
 
-
     $("#delete").button().on("click", function() {
         delDialog.dialog("open");
     });
@@ -656,7 +645,6 @@ $(function() {
      * @author DK (sort)
      */
     function delContactData() {
-
 
         contacts.splice(contactID, 1);
 
@@ -712,7 +700,6 @@ $(function() {
         }
     });
 
-
     /**
      * Macht Adressdetails des selektierten Kontakts ausfindig
      *
@@ -729,7 +716,6 @@ $(function() {
          */
         let link = 'https://chart.apis.google.com/chart?cht=qr&chs=400x400&chl='
             , quality = 'Q';
-
 
         /**
          * Bild wird mit einer Größe 400x400 instanziiert
@@ -760,7 +746,6 @@ $(function() {
          */
         $('#picture').append(myImage);
 
-
         /**
          * jQuery-UI-Dialgo wird geöffnet, welches den QR-Code enthält.
          *
@@ -768,7 +753,6 @@ $(function() {
          */
         $("#dialog_qr_code").dialog("open");
     });
-
 
     /* *************************** Nachrichten-Ticker ***************************
      * @author DK
@@ -807,52 +791,51 @@ $(function() {
         throw err;
     });
 
-/* ***************** Slider zur Auswahl der Lieblingsfarbe ***************************
- * @author DK
- */
+    /* ***************** Slider zur Auswahl der Lieblingsfarbe ***************************
+     * @author DK
+     */
 
     // formt in hexadezimale Schreibweise für Farben um
-              function hexFromRGB(r, g, b) {
-                  var hex = [
-                      r.toString( 16 ),
-                      g.toString( 16 ),
-                      b.toString( 16 )
-                  ];
-                  $.each( hex, function( nr, val ) {
-                      if ( val.length === 1 ) {
-                          hex[ nr ] = "0" + val;
-                      }
-                  });
-                  return hex.join( "" ).toUpperCase();
-              }
+    function hexFromRGB(r, g, b) {
+        var hex = [
+            r.toString(16)
+            , g.toString(16)
+            , b.toString(16)
+        ];
+        $.each(hex, function(nr, val) {
+            if (val.length === 1) {
+                hex[nr] = "0" + val;
+            }
+        });
+        return hex.join("").toUpperCase();
+    }
 
-              function refreshSwatch() {
-                  var red = $( "#red" ).slider( "value" ),
-                      green = $( "#green" ).slider( "value" ),
-                      blue = $( "#blue" ).slider( "value" ),
-                      hex = hexFromRGB( red, green, blue );
-                  me._favouriteColor = '#' + hex;
-                  $( "#swatch" ).css( "background-color", "#" + hex );
-              }
+    function refreshSwatch() {
+        var red = $("#red").slider("value")
+            , green = $("#green").slider("value")
+            , blue = $("#blue").slider("value")
+            , hex = hexFromRGB(red, green, blue);
+        me._favouriteColor = '#' + hex;
+        $("#swatch").css("background-color", "#" + hex);
+    }
 
-              $( "#red, #green, #blue" ).slider({
-                  orientation: "horizontal",
-                  range: "min",
-                  max: 255,
-                  value: 127,
-                  slide: refreshSwatch,
-                  change: refreshSwatch
-              });
+    $("#red, #green, #blue").slider({
+        orientation: "horizontal"
+        , range: "min"
+        , max: 255
+        , value: 127
+        , slide: refreshSwatch
+        , change: refreshSwatch
+    });
 
-              //$( "#red" ).slider( "value", 0 );
-              //$( "#green" ).slider( "value", 0 );
-              //$( "#blue" ).slider( "value", 0 );
+    //$( "#red" ).slider( "value", 0 );
+    //$( "#green" ).slider( "value", 0 );
+    //$( "#blue" ).slider( "value", 0 );
 
-              me._favouriteColor = 'rgb('
-               + $( "#red" ).slider( "value", 255 ) + ','
-              + $( "#green" ).slider( "value", 255 ) + ','
-              + $( "#blue" ).slider( "value", 255 ) + ')';
-
+    me._favouriteColor = 'rgb(' +
+        $("#red").slider("value", 255) + ',' +
+        $("#green").slider("value", 255) + ',' +
+        $("#blue").slider("value", 255) + ')';
 
     /******************* ENDE DK *************************/
 });
