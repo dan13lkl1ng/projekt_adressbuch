@@ -30,18 +30,29 @@ class Helpers {
 
 class Person {
     constructor(firstname,lastname,email,phone,birthday,zip,city,street){
-    this._firstname = firstname;
-    this._lastname = lastname;
-    this._email = email;
-    this._phone = phone;
-    this._birthday = birthday;
-    this._zip = zip;
-    this._city = city;
-    this._street = street;
+        this._firstname = firstname;
+        this._lastname = lastname;
+        this._email = email;
+        this._phone = phone;
+        this._birthday = birthday;
+        this._zip = zip;
+        this._city = city;
+        this._street = street;
     }
 }
 
+class MySelf extends Person {
+    constructor(firstname,lastname,email,phone,birthday,zip,city,street, favouriteColor){
+        super(firstname,lastname,email,phone,birthday,zip,city,street);
+            this._favouriteColor = favouriteColor;
 
+
+    }
+
+
+}
+
+var me = new MySelf('Daniel','Kling','d_kling@web.de','0175...','10.07.1984','76646','Bruchsal','Tulpenweg 2','yellow');
 // Hinzugefügt am 15.05.18 - SJ
 var userMessage;
 
@@ -129,10 +140,10 @@ function getContactId(event) {
  */
 function addressOut() {
 
-    // var fullAddress = contacts[contactID];
+    var fullAddress = contacts[contactID];
 
     // Findet Adresse mittels cid. 20180515 DK, OOP 20180516 DK
-    var fullAddress = Helpers.contactDetailsById();
+    //var fullAddress = Helpers.contactDetailsById();
 
     // verhindert weitere Referenzierung, falls Kontakt nicht mehr vorhanden. 20180516 DK
     if(fullAddress != undefined){
@@ -175,13 +186,13 @@ function sendContactDataToServer() {
              swal({
                title: "Done",
                text: "Erfolgreich übermittelt",
-               icon: "success", 
+               type: "success", 
              });
         }).fail(function(data) {
              swal({
               title: "Oooops",
               text: "Übermittlung schiefgelaufen",
-              icon: "error",
+              type: "error",
             }); 
         });
 }
@@ -201,6 +212,24 @@ function createDate(dateString) {
 /* *************************** Document ready **************************** */
 
 $(function() {
+
+    swal({
+      title: 'Bitte <i>Lieblingsfarbe</i> wählen',
+      type: 'info',
+      html:
+            '<div id="red"></div>' + 
+            '<div id="green"></div>' + 
+            '<div id="blue"></div>' + 
+            '<div id="swatch" class="ui-widget-content ui-corner-all"></div>',
+              showCloseButton: true,
+              showCancelButton: true,
+              focusConfirm: false,
+              confirmButtonText:
+                '<i class="fa fa-thumbs-up"></i> Great!',
+              confirmButtonAriaLabel: 'Thumbs up, great!',
+    }).then(()=>{
+          $('body').css("background-color", me._favouriteColor);
+    });
 
     /**  
      * Objekt mit Kontaktdaten im JSON-Format, welche mittels Ajax-Funktion importiert werden. 
@@ -365,7 +394,7 @@ $(function() {
     // Event Handler für dialogopen registrieren (Vorbelegung der Felder mit den Kontaktdaten aus dem Array)
     dialog.on("dialogopen", function(event) {
         //let dform = this.ownerDocument.forms[0];
-Helpers.valuesToDform(dform);
+        Helpers.valuesToDform(dform);
         updateTips("Pflichtfelder sind gekennzeichnet mit *.");
     });
 
@@ -412,7 +441,7 @@ Helpers.valuesToDform(dform);
 
     function saveContactData2() {
         let valid = true;
-        allFields.removeClass("ui-state-error");
+        allFields2.removeClass("ui-state-error");
 
         if ( firstname2.val() == '' && lastname2.val() == '' ) {
             firstname2.addClass("ui-state-error");
@@ -688,16 +717,20 @@ Helpers.valuesToDform(dform);
     }).done(function(result) {
         var news_i = 0;
         setInterval(function(){
-            document.getElementById('news').innerHTML = result.results[news_i].abstract;
-            //$("#news").animate({width:'toggle'},350);
-
-                console.log(result.results[news_i].abstract);
-            if (news_i< result.results.length){
-                news_i++;
+            if(result.results[news_i].abstract == undefined){
+                return false;
             } else {
-                news_i = 0;
-            }
-        },1000);
+                document.getElementById('news').innerHTML = result.results[news_i].abstract;
+                //$("#news").animate({width:'toggle'},350);
+
+                //console.log(result.results[news_i].abstract);
+                if (news_i < result.results.length -1 ){
+                    news_i++;
+                } else {
+                    news_i = 0;
+                }
+            } 
+        },3000);
 
     }).fail(function(err) {
         throw err;

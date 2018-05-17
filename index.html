@@ -3,14 +3,15 @@
    <head>
       <meta charset="UTF-8">
       <title>Kontakte</title>
+      <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:300,300i,400,400i,700,700i,800,800i|Merriweather:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
       <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
       <link href="style.css" rel="stylesheet" type="text/css">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+      <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+      <script src="https://unpkg.com/sweetalert2@7.20.5/dist/sweetalert2.all.js"></script>
       <script src="script.js"></script>
-      <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:300,300i,400,400i,700,700i,800,800i|Merriweather:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
       <style>
 footer {
     bottom: 0;
@@ -28,7 +29,40 @@ footer {
     text-align: center;
     width: 700px;
 }
+
+.collection-item:hover {
+    background-color: #3a22b14f;
+    cursor: pointer;
+
+}
+
+#test {
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+}
       </style>
+       <style>
+  #red, #green, #blue {
+    float: left;
+    clear: left;
+    width: 300px;
+    margin: 15px;
+  }
+  #swatch {
+    width: 120px;
+    height: 100px;
+    margin-top: 18px;
+    margin-left: 350px;
+    background-image: none;
+  }
+  #red .ui-slider-range { background: #ef2929; }
+  #red .ui-slider-handle { border-color: #ef2929; }
+  #green .ui-slider-range { background: #8ae234; }
+  #green .ui-slider-handle { border-color: #8ae234; }
+  #blue .ui-slider-range { background: #729fcf; }
+  #blue .ui-slider-handle { border-color: #729fcf; }
+  </style>
    </head>
    <body>
       <div id="wrapper">
@@ -128,5 +162,47 @@ footer {
       <footer>
           <div id="news"></div>
       </footer>
+      <script>
+          $( function() {
+              function hexFromRGB(r, g, b) {
+                  var hex = [
+                      r.toString( 16 ),
+                      g.toString( 16 ),
+                      b.toString( 16 )
+                  ];
+                  $.each( hex, function( nr, val ) {
+                      if ( val.length === 1 ) {
+                          hex[ nr ] = "0" + val;
+                      }
+                  });
+                  return hex.join( "" ).toUpperCase();
+              }
+
+              function refreshSwatch() {
+                  var red = $( "#red" ).slider( "value" ),
+                      green = $( "#green" ).slider( "value" ),
+                      blue = $( "#blue" ).slider( "value" ),
+                      hex = hexFromRGB( red, green, blue );
+                  me._favouriteColor = '#' + hex;
+                  $( "#swatch" ).css( "background-color", "#" + hex );
+              }
+
+              $( "#red, #green, #blue" ).slider({
+                  orientation: "horizontal",
+                  range: "min",
+                  max: 255,
+                  value: 127,
+                  slide: refreshSwatch,
+                  change: refreshSwatch
+              });
+              $( "#red" ).slider( "value", 255 );
+              $( "#green" ).slider( "value", 140 );
+              $( "#blue" ).slider( "value", 60 );
+              me._favouriteColor = 'rgb(' 
+               + $( "#red" ).slider( "value", 255 ) + ','
+              + $( "#green" ).slider( "value", 140 ) + ','
+              + $( "#blue" ).slider( "value", 60 ) + ')';
+          });
+      </script>
    </body>
 </html>
