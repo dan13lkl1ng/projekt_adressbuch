@@ -16,6 +16,9 @@ class Helpers {
         });
     }
 
+    /**
+     * Setzt den Wert des Objekts für das Dialog Widget auf den entsprechenden Wert aus der Datenbank.
+     */
     static valuesToDform(elem) {
         elem.firstname.value = contacts[contactID].firstname;
         elem.lastname.value = contacts[contactID].lastname;
@@ -28,6 +31,10 @@ class Helpers {
     }
 }
 
+/** Person enthält alle Kontaktdaten
+ *
+ * @author DK
+ **/
 class Person {
     constructor(firstname, lastname, email, phone, birthday, zip, city, street) {
         this._firstname = firstname;
@@ -41,17 +48,20 @@ class Person {
     }
 }
 
+/** Der User kann für sich selbst eine Lieblingsfarbe festlegen. 
+ *
+ * Aber auch andere Kontaktdaten einer normalen Person ablegen.
+ */ 
 class MySelf extends Person {
     constructor(firstname, lastname, email, phone, birthday, zip, city, street, favouriteColor) {
         super(firstname, lastname, email, phone, birthday, zip, city, street);
         this._favouriteColor = favouriteColor;
-
-
     }
 
 
 }
 
+// Instanziierung der eigenen Person am 17.05.2018 DK
 var me = new MySelf('Max', 'Mustermann', 'max@mustermann.de', '0123456789', '01.10.1980', '76131', 'Karlsruhe', 'Bahnhofsstraße 1', 'yellow');
 
 // Hinzugefügt am 15.05.18 - SJ
@@ -168,7 +178,7 @@ function addressOut() {
     var fullAddress = contacts[contactID];
 
     // Findet Adresse mittels cid. 20180515 DK, OOP 20180516 DK
-    //var fullAddress = Helpers.contactDetailsById();
+    // var fullAddress = Helpers.contactDetailsById();
 
     // verhindert weitere Referenzierung, falls Kontakt nicht mehr vorhanden. 20180516 DK
     if (fullAddress != undefined) {
@@ -238,6 +248,7 @@ function createDate(dateString) {
 
 $(function() {
 
+    // Sweetalert2 mit einem integrierten jQuery-UI-Slider zur Farbauswahl des Hintergrunds
     swal({
         title: 'Bitte <i>Lieblingsfarbe</i> wählen'
         , type: 'info'
@@ -273,11 +284,8 @@ $(function() {
             contacts[i].cid = i;
         }
 
-        /** Sortiert alphabetisch nach Nachnamen und gibt an das gleiche Objekt zurück.  */
-
-        /** Listeninstanz wird angelegt.  */
+        // Listeninstanz wird angelegt.  
         contactlist = new List('contactlist', options, contacts);
-
         contactlist.sort('lastname', {
             order: "asc"
         });
@@ -468,7 +476,6 @@ $(function() {
      * @return (bool) valid 
      * @author DK
      */
-
     function saveContactData2() {
         let valid = true;
         allFields2.removeClass("ui-state-error");
@@ -498,6 +505,7 @@ $(function() {
 
         if (valid) {
             contactID = contacts.length;
+
             // einfacher lösbar durch length, dann aber Gefahr der doppelten ID-Vergabe
             let max_cid = contacts.reduce((max, p) => p.cid > max ? p.cid : max, contacts[0].cid);
 
@@ -520,7 +528,7 @@ $(function() {
             // clear list
             contactlist.clear();
 
-            /** Liste wird neu angelegt und sortiert.  */
+            // Liste wird neu angelegt und sortiert. 
             contactlist = new List('contactlist', options, contacts);
             contactlist.sort('lastname', {
                 order: "asc"
@@ -684,7 +692,6 @@ $(function() {
      * und diversen Ein- und Ausblendeffekten
      *
      * @author DK
-     *
      */
     $("#dialog_qr_code").dialog({
         height: 600
@@ -731,7 +738,8 @@ $(function() {
          */
         var myImage = new Image(400, 400);
 
-        /* Bild erhält Link mit Adressdetails im VCard 3.0-Format
+        /**
+         * Bild erhält Link mit Adressdetails im VCard 3.0-Format
          *
          * @author DK
          */
@@ -745,21 +753,36 @@ $(function() {
             'END:VCARD' +
             '&chld=' + quality;
 
-        /** An p Element im DOM wird das Bild angehängt
+        /**
+         * An p Element im DOM wird das Bild angehängt
          *
          * @author DK
          */
         $('#picture').append(myImage);
 
 
+        /**
+         * jQuery-UI-Dialgo wird geöffnet, welches den QR-Code enthält.
+         *
+         * @author DK
+         */
         $("#dialog_qr_code").dialog("open");
     });
 
+
+    /* *************************** Nachrichten-Ticker ***************************
+     * @author DK
+     */
+
+    // Erster Rumpf des Links zur Api zur NY Times
     var url = "https://api.nytimes.com/svc/topstories/v2/world.json";
+
+    // Key zur API
     url += '?' + $.param({
         'api-key': "2e8afca59cf243bcbc0d87685201793b"
     });
 
+    // AJAX abfrage zu den aktuellen Nachrichten
     $.ajax({
         url: url
         , method: 'GET'
@@ -784,6 +807,11 @@ $(function() {
         throw err;
     });
 
+/* ***************** Slider zur Auswahl der Lieblingsfarbe ***************************
+ * @author DK
+ */
+
+    // formt in hexadezimale Schreibweise für Farben um
               function hexFromRGB(r, g, b) {
                   var hex = [
                       r.toString( 16 ),
