@@ -13,56 +13,52 @@
       <script src="https://unpkg.com/sweetalert2@7.20.5/dist/sweetalert2.all.js"></script>
       <script src="script.js"></script>
       <style>
-footer {
-    bottom: 0;
-    left: 50%;
-    position: absolute;
-}
-
-#news {
-    background-color: #555;
-    bottom: 0;
-    height: 4em;
-    left: -50%;
-    padding: .3em;
-    position: relative;
-    text-align: center;
-    width: 700px;
-}
-
-.collection-item:hover {
-    background-color: #3a22b14f;
-    cursor: pointer;
-
-}
-
-#test {
-    width: 100px;
-    height: 100px;
-    background-color: blue;
-}
+         footer {
+         bottom: 0;
+         left: 50%;
+         position: absolute;
+         }
+         #news {
+         background-color: #555;
+         bottom: 0;
+         height: 4em;
+         left: -50%;
+         padding: .3em;
+         position: relative;
+         text-align: center;
+         width: 700px;
+         }
+         .collection-item:hover {
+         background-color: #3a22b14f;
+         cursor: pointer;
+         }
+         #test {
+         width: 100px;
+         height: 100px;
+         background-color: blue;
+         }
       </style>
-       <style>
-  #red, #green, #blue {
-    float: left;
-    clear: left;
-    width: 300px;
-    margin: 15px;
-  }
-  #swatch {
-    width: 120px;
-    height: 100px;
-    margin-top: 18px;
-    margin-left: 350px;
-    background-image: none;
-  }
-  #red .ui-slider-range { background: #ef2929; }
-  #red .ui-slider-handle { border-color: #ef2929; }
-  #green .ui-slider-range { background: #8ae234; }
-  #green .ui-slider-handle { border-color: #8ae234; }
-  #blue .ui-slider-range { background: #729fcf; }
-  #blue .ui-slider-handle { border-color: #729fcf; }
-  </style>
+      <style>
+         #red, #green, #blue {
+         float: left;
+         clear: left;
+         width: 300px;
+         margin: 15px;
+         }
+         #swatch {
+         width: 120px;
+         height: 100px;
+         margin-top: 18px;
+         margin-left: 350px;
+         background-image: none;
+         }
+         #red .ui-slider-range { background: #ef2929; }
+         #red .ui-slider-handle { border-color: #ef2929; }
+         #green .ui-slider-range { background: #8ae234; }
+         #green .ui-slider-handle { border-color: #8ae234; }
+         #blue .ui-slider-range { background: #729fcf; }
+         #blue .ui-slider-handle { border-color: #729fcf; }
+      </style>
    </head>
    <body>
       <div id="wrapper">
@@ -157,52 +153,52 @@ footer {
          </p>
       </div>
       <div id="dialog_qr_code" title="QR-Code">
-          <p id="picture"></p>
+         <p id="picture"></p>
       </div>
       <footer>
-          <div id="news"></div>
+         <div id="news"></div>
       </footer>
       <script>
-          $( function() {
-              function hexFromRGB(r, g, b) {
-                  var hex = [
-                      r.toString( 16 ),
-                      g.toString( 16 ),
-                      b.toString( 16 )
-                  ];
-                  $.each( hex, function( nr, val ) {
-                      if ( val.length === 1 ) {
-                          hex[ nr ] = "0" + val;
-                      }
-                  });
-                  return hex.join( "" ).toUpperCase();
-              }
-
-              function refreshSwatch() {
-                  var red = $( "#red" ).slider( "value" ),
-                      green = $( "#green" ).slider( "value" ),
-                      blue = $( "#blue" ).slider( "value" ),
-                      hex = hexFromRGB( red, green, blue );
-                  me._favouriteColor = '#' + hex;
-                  $( "#swatch" ).css( "background-color", "#" + hex );
-              }
-
-              $( "#red, #green, #blue" ).slider({
-                  orientation: "horizontal",
-                  range: "min",
-                  max: 255,
-                  value: 127,
-                  slide: refreshSwatch,
-                  change: refreshSwatch
-              });
-              $( "#red" ).slider( "value", 255 );
-              $( "#green" ).slider( "value", 140 );
-              $( "#blue" ).slider( "value", 60 );
-              me._favouriteColor = 'rgb(' 
-               + $( "#red" ).slider( "value", 255 ) + ','
-              + $( "#green" ).slider( "value", 140 ) + ','
-              + $( "#blue" ).slider( "value", 60 ) + ')';
-          });
+         $( function() {
+             function hexFromRGB(r, g, b) {
+                 var hex = [
+                     r.toString( 16 ),
+                     g.toString( 16 ),
+                     b.toString( 16 )
+                 ];
+                 $.each( hex, function( nr, val ) {
+                     if ( val.length === 1 ) {
+                         hex[ nr ] = "0" + val;
+                     }
+                 });
+                 return hex.join( "" ).toUpperCase();
+             }
+         
+             function refreshSwatch() {
+                 var red = $( "#red" ).slider( "value" ),
+                     green = $( "#green" ).slider( "value" ),
+                     blue = $( "#blue" ).slider( "value" ),
+                     hex = hexFromRGB( red, green, blue );
+                 me._favouriteColor = '#' + hex;
+                 $( "#swatch" ).css( "background-color", "#" + hex );
+             }
+         
+             $( "#red, #green, #blue" ).slider({
+                 orientation: "horizontal",
+                 range: "min",
+                 max: 255,
+                 value: 127,
+                 slide: refreshSwatch,
+                 change: refreshSwatch
+             });
+             $( "#red" ).slider( "value", 255 );
+             $( "#green" ).slider( "value", 140 );
+             $( "#blue" ).slider( "value", 60 );
+             me._favouriteColor = 'rgb(' 
+              + $( "#red" ).slider( "value", 255 ) + ','
+             + $( "#green" ).slider( "value", 140 ) + ','
+             + $( "#blue" ).slider( "value", 60 ) + ')';
+         });
       </script>
    </body>
 </html>
